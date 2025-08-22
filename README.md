@@ -1,7 +1,7 @@
 # Ansible Keepalived
 Script for installing and configuring keepalived in Ansible
 
-## Explain
+## Example
 ```yaml
 ---
 - name: Install Keepalived
