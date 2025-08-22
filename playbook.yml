@@ -1,0 +1,34 @@
+- name: Install Keepalived
+  apt:
+    name: keepalived
+    state: present
+
+- name: Configure Keepalived
+  copy:
+    dest: /etc/keepalived/keepalived.conf
+    content: |
+      vrrp_instance VI_1 {
+          state {% if inventory_hostname == master_host %}MASTER{% else %}BACKUP{% endif %}
+
+          interface {{ interface }}
+          virtual_router_id {{ virtual_router_id }}
+          priority {% if inventory_hostname == master_host %}150{% else %}100{% endif %}
+      
+          advert_int 1
+
+          authentication {
+              auth_type PASS
+              auth_pass mysecurepass
+          }
+
+          virtual_ipaddress {
+              {{ virtual_ip }}/24
+          }
+      }
+    mode: "0644"
+
+- name: Enable and restart Keepalived
+  systemd:
+    name: keepalived
+    state: restarted
+    enabled: yes
