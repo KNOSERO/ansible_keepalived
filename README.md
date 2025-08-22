@@ -5,13 +5,13 @@ Script for installing and configuring keepalived in Ansible
 ```yaml
 ---
 - name: Install Keepalived
-  hosts: prymary_serwer, secondary_serwer 
+  hosts: primary_serwer, secondary_serwer 
   become: yes
   vars:
     virtual_ip: "192.168.0.10"
     virtual_router_id: 50
     interface: "<<ETERNET INTERFACE>>"
-    master_host: "prymary_serwer"
+    master_host: "primary_serwer"
 
   tasks:
     - name: Run install_keepalived.yml
