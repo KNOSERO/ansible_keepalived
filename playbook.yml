@@ -2,6 +2,11 @@
   apt:
     name: keepalived
     state: present
+    update_cache: yes
+  register: keepalived_install
+  retries: 5
+  delay: 30
+  until: keepalived_install is success
 
 - name: Configure Keepalived
   copy:
